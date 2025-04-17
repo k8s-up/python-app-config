@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  namespace: default
+  labels:
+    k8s-app: myapp-deployment
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: cluster-issuer
+
+spec:
+#  ingressClassName: "nginx"
+  tls:
+  - hosts:
+    - python-app.corp.local
+    secretName: argocd-cert
+  rules:
+  - host: python-app.corp.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-service
+            port:
+              number: 5000
