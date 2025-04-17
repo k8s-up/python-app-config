@@ -3,22 +3,20 @@ kind: Deployment
 metadata:
   name: myapp-deployment
   labels:
-      app: myapp
-      type: front-end
+    app: myapp
+    type: front-end
 spec:
   template:
-
     metadata:
-     name: myapp-pod
-     labels:
+      name: myapp-pod
+      labels:
         app: myapp
         type: front-end
     spec:
       containers:
-      - name: python-app
-        image: ghcr.io/k8s-up/python-app:1.0.1
-
+        - name: python-app
+          image: ghcr.io/k8s-up/python-app:1.0.2
   replicas: 3
   selector:
-     matchLabels:
-        type: front-end
+    matchLabels:
+      type: front-end
